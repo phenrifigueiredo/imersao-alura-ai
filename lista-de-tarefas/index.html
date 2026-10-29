@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minha Lista de Tarefas</title>
+  <!-- Vinculamos o arquivo de estilos (CSS) -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Contêiner principal da aplicação -->
+  <div class="app-container">
+    
+    <header class="app-header">
+      <h1>Minhas Tarefas</h1>
+      <p class="subtitle">Organize seu dia de forma simples e visual</p>
+    </header>
+
+    <!-- Formulário para inserir uma nova tarefa -->
+    <form id="todo-form" class="task-form">
+      <input 
+        type="text" 
+        id="task-input" 
+        placeholder="O que você precisa fazer hoje?" 
+        autocomplete="off"
+        required
+      />
+      <button type="submit" class="btn-add">Adicionar</button>
+    </form>
+
+    <!-- Resumo de contagem de tarefas -->
+    <div class="task-summary">
+      <span id="task-count">0 tarefas pendentes</span>
+      <button id="clear-completed" class="btn-text" type="button">Limpar concluídas</button>
+    </div>
+
+    <!-- Lista onde os itens serão inseridos dinamicamente pelo JavaScript -->
+    <ul id="task-list" class="task-list">
+      <!-- As tarefas serão inseridas aqui via JavaScript -->
+    </ul>
+
+    <!-- Mensagem exibida caso a lista esteja vazia -->
+    <div id="empty-state" class="empty-state">
+      <p>Nenhuma tarefa no momento. Aproveite seu dia ou adicione uma acima!</p>
+    </div>
+
+  </div>
+
+  <!-- Vinculamos o arquivo de lógica e interatividade (JavaScript) -->
+  <script src="script.js"></script>
+</body>
+</html>

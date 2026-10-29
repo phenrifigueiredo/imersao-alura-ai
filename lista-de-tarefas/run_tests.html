@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Bateria de Testes Automatizados - Lista de Tarefas</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+      padding: 30px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 { color: #0f172a; margin-bottom: 8px; }
+    .subtitle { color: #64748b; margin-bottom: 24px; }
+    .summary-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+      display: flex;
+      gap: 30px;
+    }
+    .stat-number { font-size: 1.8rem; font-weight: bold; }
+    .stat-pass { color: #16a34a; }
+    .stat-fail { color: #dc2626; }
+    .test-case {
+      background: white;
+      border-left: 5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .test-case.pass { border-left-color: #16a34a; }
+    .test-case.fail { border-left-color: #dc2626; background: #fef2f2; }
+    .test-title { font-weight: 600; font-size: 0.95rem; }
+    .test-desc { font-size: 0.85rem; color: #64748b; margin-top: 4px; }
+    .badge {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+    .badge-pass { background: #dcfce7; color: #15803d; }
+    .badge-fail { background: #fee2e2; color: #991b1b; }
+    /* Esconde a aplicação alvo dos testes para não interferir visualmente */
+    #sandbox {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧪 Relatório de Testes Automatizados</h1>
+  <p class="subtitle">Verificação completa das funcionalidades e da diferenciação visual de tarefas.</p>
+
+  <div class="summary-card">
+    <div>
+      <div class="stat-number stat-pass" id="total-pass">0</div>
+      <div style="color: #64748b; font-size: 0.9rem;">Testes Passaram</div>
+    </div>
+    <div>
+      <div class="stat-number stat-fail" id="total-fail">0</div>
+      <div style="color: #64748b; font-size: 0.9rem;">Falhas</div>
+    </div>
+    <div>
+      <div class="stat-number" style="color: #2563eb;" id="total-tests">0</div>
+      <div style="color: #64748b; font-size: 0.9rem;">Total Executado</div>
+    </div>
+  </div>
+
+  <div id="test-results">
+    <!-- Resultados inseridos aqui -->
+  </div>
+
+  <!-- Contêiner Sandbox com os elementos da aplicação -->
+  <div id="sandbox">
+    <form id="todo-form">
+      <input type="text" id="task-input" />
+      <button type="submit">Adicionar</button>
+    </form>
+    <span id="task-count"></span>
+    <button id="clear-completed"></button>
+    <ul id="task-list"></ul>
+    <div id="empty-state"></div>
+  </div>
+
+  <script>
+    // Limpa o localStorage para os testes começarem isolados
+    localStorage.clear();
+  </script>
+  <!-- Carrega o script oficial da aplicação -->
+  <script src="script.js"></script>
+
+  <script>
+    const resultsContainer = document.getElementById("test-results");
+    let passed = 0;
+    let failed = 0;
+
+    function assert(condition, title, description) {
+      const card = document.createElement("div");
+      card.className = `test-case ${condition ? "pass" : "fail"}`;
+      
+      const info = document.createElement("div");
+      info.innerHTML = `<div class="test-title">${condition ? "✓" : "✗"} ${title}</div><div class="test-desc">${description}</div>`;
+      
+      const badge = document.createElement("span");
+      badge.className = `badge ${condition ? "badge-pass" : "badge-fail"}`;
+      badge.textContent = condition ? "PASSOU" : "FALHOU";
+
+      card.appendChild(info);
+      card.appendChild(badge);
+      resultsContainer.appendChild(card);
+
+      if (condition) {
+        passed++;
+        console.log(`[PASS] ${title}`);
+      } else {
+        failed++;
+        console.error(`[FAIL] ${title} - ${description}`);
+      }
+    }
+
+    // ==========================================
+    // EXECUÇÃO DOS TESTES
+    // ==========================================
+    console.log("Iniciando testes...");
+
+    // Teste 1: Estado inicial
+    const emptyStateVisible = emptyState.style.display !== "none";
+    const initialCount = taskCount.textContent.includes("0 tarefas pendentes");
+    assert(emptyStateVisible && initialCount, "1. Estado Inicial Vazio", "A lista deve exibir a mensagem de lista vazia e 0 tarefas pendentes.");
+
+    // Teste 2: Adicionar uma tarefa
+    adicionarTarefa("Estudar Lógica de Programação");
+    const itemsAposAdicionar = taskList.querySelectorAll(".task-item");
+    assert(itemsAposAdicionar.length === 1, "2. Adicionar Tarefa", "A lista deve conter exatamente 1 item após a adição.");
+
+    // Teste 3: Diferenciação visual de tarefa Pendente
+    const primeiroItem = itemsAposAdicionar[0];
+    const badgePendente = primeiroItem.querySelector(".task-badge");
+    const temClasseCompleted = primeiroItem.classList.contains("completed");
+    const badgePendenteCorreto = badgePendente && badgePendente.classList.contains("badge-pending") && badgePendente.textContent.includes("Pendente");
+    assert(!temClasseCompleted && badgePendenteCorreto, "3. Visual de Tarefa Pendente", "Tarefa pendente não deve ter classe .completed e deve exibir etiqueta .badge-pending com texto 'Pendente'.");
+
+    // Teste 4: Concluir tarefa e Diferenciação visual de Concluída
+    const tarefaId = tarefas[0].id;
+    alternarConclusao(tarefaId); // Marca como concluída
+    const itemConcluido = taskList.querySelector(".task-item");
+    const badgeConcluida = itemConcluido.querySelector(".task-badge");
+    const temClasseCompletedAgora = itemConcluido.classList.contains("completed");
+    const badgeConcluidaCorreto = badgeConcluida && badgeConcluida.classList.contains("badge-completed") && badgeConcluida.textContent.includes("✓ Concluída");
+    assert(temClasseCompletedAgora && badgeConcluidaCorreto, "4. Visual de Tarefa Concluída", "Tarefa concluída deve receber classe .completed e etiqueta .badge-completed com '✓ Concluída'.");
+
+    // Teste 5: Contador de pendências
+    const contadorZerado = taskCount.textContent.includes("0 tarefas pendentes");
+    adicionarTarefa("Segunda Tarefa Pendente");
+    const contadorAtualizado = taskCount.textContent.includes("1 tarefa pendente");
+    assert(contadorZerado && contadorAtualizado, "5. Contador de Tarefas Pendentes", "O contador deve calcular apenas as pendentes (0 com 1 concluída, e 1 após adicionar outra).");
+
+    // Teste 6: Persistência no LocalStorage
+    const tarefasSalvas = JSON.parse(localStorage.getItem("minhas_tarefas")) || [];
+    const localStorageValido = tarefasSalvas.length === 2 && tarefasSalvas[0].concluida === true && tarefasSalvas[1].concluida === false;
+    assert(localStorageValido, "6. Persistência no LocalStorage", "Os dados devem ser salvos no LocalStorage mantendo o estado de conclusão e quantidade.");
+
+    // Teste 7: Remover tarefa individual
+    const idParaRemover = tarefasSalvas[0].id; // remove a primeira
+    removerTarefa(idParaRemover);
+    const totalAposRemocao = taskList.querySelectorAll(".task-item").length;
+    assert(totalAposRemocao === 1, "7. Remoção de Tarefa Individual", "Ao remover um item pelo ID, a lista deve ter seu tamanho reduzido no DOM e nos dados.");
+
+    // Teste 8: Limpar Concluídas
+    // Marca a tarefa restante como concluída e limpa
+    alternarConclusao(tarefas[0].id);
+    limparConcluidas();
+    const totalAposLimpar = taskList.querySelectorAll(".task-item").length;
+    const emptyStateAposLimpar = emptyState.style.display !== "none";
+    assert(totalAposLimpar === 0 && emptyStateAposLimpar, "8. Limpar Tarefas Concluídas", "Ao limpar concluídas, todas as finalizadas devem ser removidas e o estado vazio restabelecido.");
+
+    // Atualiza o painel de estatísticas
+    document.getElementById("total-pass").textContent = passed;
+    document.getElementById("total-fail").textContent = failed;
+    document.getElementById("total-tests").textContent = passed + failed;
+    console.log(`Testes finalizados: ${passed} passaram, ${failed} falharam.`);
+  </script>
+</body>
+</html>
