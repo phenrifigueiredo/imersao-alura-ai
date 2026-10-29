@@ -1,4 +1,4 @@
-# 📝 Aplicação de Lista de Tarefas (To-Do List)
+# 📝 Desafio 3: Lista de Tarefas (To-Do List)
 
 Bem-vindo ao seu primeiro projeto web! Esta aplicação foi criada com os três pilares fundamentais do desenvolvimento de software para a web: **HTML**, **CSS** e **JavaScript**.
 

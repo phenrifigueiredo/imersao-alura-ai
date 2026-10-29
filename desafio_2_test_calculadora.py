@@ -1,5 +1,5 @@
 import unittest
-from calculadora import somar, subtrair, multiplicar, dividir, potencia, porcentagem
+from desafio_1_calculadora import somar, subtrair, multiplicar, dividir, potencia, porcentagem
 
 class TestCalculadora(unittest.TestCase):
 

@@ -1,40 +1,43 @@
 # Imersão Alura 🚀
 
-Repositório com os projetos desenvolvidos durante os estudos da **Imersão Alura**.
+Repositório organizado com os desafios desenvolvidos durante os estudos da **Imersão Alura**.
 
 ---
 
-## 📁 Projetos
+## 📁 Estrutura dos Desafios
 
-### 1. 📝 [Lista de Tarefas (Web)](./lista-de-tarefas)
-Aplicação visual de lista de tarefas (*To-Do List*) desenvolvida com HTML5, CSS3 e JavaScript puro:
-- **Funcionalidades:** Adicionar, concluir e excluir tarefas, limpar concluídas e contador dinâmico.
-- **Interface Visual:** Diferenciação visual imediata entre tarefas pendentes (borda azul, etiqueta "Pendente") e concluídas (borda verde, etiqueta "✓ Concluída", texto tachado em itálico e opacidade suave).
-- **Persistência:** Armazenamento automático no `localStorage` do navegador.
-- **Qualidade:** Bateria de testes automatizados com suíte visual no próprio navegador ([`run_tests.html`](./lista-de-tarefas/run_tests.html)).
-- 👉 [Veja a documentação completa da Lista de Tarefas](./lista-de-tarefas/README.md)
+| Desafio | Projeto / Conteúdo | Arquivos / Pasta | Tecnologias |
+| :---: | :--- | :--- | :--- |
+| **Desafio 1** | Calculadora Interativa no Terminal | [`desafio_1_calculadora.py`](./desafio_1_calculadora.py) | Python 3 |
+| **Desafio 2** | Testes Unitários Automatizados da Calculadora | [`desafio_2_test_calculadora.py`](./desafio_2_test_calculadora.py) | Python `unittest` |
+| **Desafio 3** | Aplicação Web: Lista de Tarefas (To-Do List) | [`desafio-3-lista-de-tarefas/`](./desafio-3-lista-de-tarefas/) | HTML5, CSS3, JavaScript |
 
 ---
 
-### 2. 🧮 Calculadora em Python
-Um projeto de calculadora em Python desenvolvido inicialmente durante a imersão, com arquitetura modular, boas práticas, tratamento de erros, cálculo de porcentagem e testes automatizados.
+## 🧮 Desafio 1: Calculadora em Python
+Calculadora modular com menu interativo no terminal e operações matemáticas:
+- **Operações:** Adição (`+`), Subtração (`-`), Multiplicação (`*`), Divisão (`/`) com proteção contra divisão por zero, Potenciação (`**`) e Porcentagem (`%`).
+- **Execução:**
+  ```bash
+  python desafio_1_calculadora.py
+  ```
 
-#### 🚀 Funcionalidades
-- **Adição (`+`)**
-- **Subtração (`-`)**
-- **Multiplicação (`*`)**
-- **Divisão (`/`)** com proteção contra divisão por zero
-- **Potenciação (`**`)**
-- **Cálculo de Porcentagem (`%`)**
-- **Menu interativo no terminal** com opção de saída limpa
-- **Testes unitários automatizados** com a biblioteca padrão `unittest`
+---
 
-#### 🛠️ Como Executar a Calculadora
-```bash
-python calculadora.py
-```
+## 🧪 Desafio 2: Testes Automatizados da Calculadora
+Bateria de testes unitários para garantir a confiabilidade de todas as funções matemáticas da calculadora:
+- **Testes implementados:** Verificação de operações positivas, negativas, decimais, elemento neutro e divisão por zero.
+- **Execução dos testes:**
+  ```bash
+  python -m unittest -v desafio_2_test_calculadora.py
+  ```
 
-Para executar os testes da calculadora:
-```bash
-python -m unittest -v test_calculadora.py
-```
+---
+
+## 📝 Desafio 3: Lista de Tarefas (Web)
+Aplicação visual de lista de tarefas (*To-Do List*) com interface responsiva e moderna:
+- **Funcionalidades:** Adicionar, marcar como concluída, excluir tarefas, limpar concluídas e contador dinâmico de pendências.
+- **Diferenciação Visual:** Tarefas pendentes contam com borda azul e etiqueta *"Pendente"*; concluídas recebem borda verde, etiqueta *"✓ Concluída"*, texto tachado em itálico e opacidade suave para foco.
+- **Persistência:** Dados salvos automaticamente no `localStorage` do navegador.
+- **Bateria de Testes:** Suíte visual automatizada integrada no arquivo [`desafio-3-lista-de-tarefas/run_tests.html`](./desafio-3-lista-de-tarefas/run_tests.html).
+- 👉 [Veja a documentação completa do Desafio 3](./desafio-3-lista-de-tarefas/README.md)
